@@ -23,7 +23,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | a PHP script and you can easily do that on your own.
 |
 */
-$config['base_url'] = 'https://dkip.sinjaikab.go.id/lokasi';
+// $config['base_url'] = 'https://dkip.sinjaikab.go.id/lokasi';
+
+$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?"https://":"http://";
+
+$config['base_url'] = $protocol.$_SERVER['HTTP_HOST'].'/lokasi/';
 
 /*
 |--------------------------------------------------------------------------

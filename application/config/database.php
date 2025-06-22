@@ -94,3 +94,54 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
+
+
+
+if ($_SERVER['HTTP_HOST']=='dkip.sinjaikab.go.id') {
+		$db['default'] = array(
+			'dsn'	=> '',
+			'hostname' => 'localhost',
+			'username' => 'dkipsinjai_ussaoteng',
+			'password' => ';reL~Wqh0q;$AU4t',
+			'database' => 'dkipsinjai_saotengnga',
+			'dbdriver' => 'mysqli',
+			'dbprefix' => '',
+			'pconnect' => FALSE,
+			'db_debug' => (ENVIRONMENT !== 'production'),
+			'cache_on' => FALSE,
+			'cachedir' => '',
+			'char_set' => 'utf8',
+			'dbcollat' => 'utf8_general_ci',
+			'swap_pre' => '',
+			'encrypt' => FALSE,
+			'compress' => FALSE,
+			'stricton' => FALSE,
+			'failover' => array(),
+			'save_queries' => TRUE
+		);
+
+} else {	
+
+		$db['default'] = array(
+			'dsn'	=> '',
+			'hostname' => 'localhost',
+			'username' => 'root',
+			'password' => 'sembarangji',
+			'database' => 'lokasi_db',
+			'dbdriver' => 'mysqli',
+			'dbprefix' => '',
+			'pconnect' => FALSE,
+			'db_debug' => (ENVIRONMENT !== 'production'),
+			'cache_on' => FALSE,
+			'cachedir' => '',
+			'char_set' => 'utf8',
+			'dbcollat' => 'utf8_general_ci',
+			'swap_pre' => '',
+			'encrypt' => FALSE,
+			'compress' => FALSE,
+			'stricton' => FALSE,
+			'failover' => array(),
+			'save_queries' => TRUE
+		);
+}
