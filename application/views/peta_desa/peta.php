@@ -38,7 +38,7 @@
                             <tr>
                                 <td><?php echo $index + 1; ?></td>
                                 <td><a href="<?php echo base_url('/peta_desa/detail/').$lokasi->lokasi_id; ?>"> <?php echo $lokasi->lokasi_nama; ?></a></td>
-                                <td><?php echo $lokasi->kategori_nama; ?></td>
+                                <td><img src="<?php echo base_url("images/icons/".$lokasi->kategori_icon); ?>"> <?php echo $lokasi->kategori_nama; ?></td>
                                 <td><?php echo $lokasi->lokasi_alamat; ?></td>
                                 <td><?php echo $lokasi->lokasi_lat . ', ' . $lokasi->lokasi_long; ?></td>
                                 <td><?php echo $lokasi->lokasi_keterangan ?? '-'; ?></td>
@@ -211,9 +211,13 @@
         ).addTo(lokasiLayer);
         
         marker.bindPopup(
-            "<b><?php echo $lokasi->lokasi_nama; ?></b><br>" +
-            "<?php echo $lokasi->lokasi_alamat; ?>" +
-            "<?php if(!empty($lokasi->lokasi_keterangan)): ?><br><br><?php echo $lokasi->lokasi_keterangan; ?><?php endif; ?>"
+            "<img src='<?php echo base_url("images/icons/".$lokasi->kategori_icon); ?>'> <b><?php echo $lokasi->lokasi_nama; ?></b><br>" +
+            "Kategori : <?php echo $lokasi->kategori_nama; ?><br>" +
+            "<?php echo $lokasi->lokasi_alamat; ?><br>" +
+            "<?php if(!empty($lokasi->lokasi_keterangan)): ?>" +
+            "<br><?php echo $lokasi->lokasi_keterangan; ?><?php endif; ?>" +
+            "<br><a target=_blank href=\"https://maps.google.com/maps?q=<?php echo $lokasi->lokasi_nama; ?>@<?php echo $lokasi->lokasi_lat; ?>,<?php echo $lokasi->lokasi_long; ?>&z=17 \">Lihat di peta google</a>" +
+            "<br><a href=\"<?php echo base_url('/peta_desa/detail/').$lokasi->lokasi_id; ?>\">Lihat detail</a>"
         );
         
         allMarkers.push(marker); // Tambahkan ke array allMarkers
