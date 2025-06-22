@@ -37,7 +37,7 @@
                             <?php foreach ($lokasi_list as $index => $lokasi): ?>
                             <tr>
                                 <td><?php echo $index + 1; ?></td>
-                                <td><?php echo $lokasi->lokasi_nama; ?></td>
+                                <td><a href="<?php echo base_url('/peta_desa/detail/').$lokasi->lokasi_id; ?>"> <?php echo $lokasi->lokasi_nama; ?></a></td>
                                 <td><?php echo $lokasi->kategori_nama; ?></td>
                                 <td><?php echo $lokasi->lokasi_alamat; ?></td>
                                 <td><?php echo $lokasi->lokasi_lat . ', ' . $lokasi->lokasi_long; ?></td>

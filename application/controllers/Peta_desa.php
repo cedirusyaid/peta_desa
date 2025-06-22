@@ -6,6 +6,8 @@ class Peta_desa extends CI_Controller {
     public function __construct() {
         parent::__construct();
         $this->load->model('Peta_desa_model');
+        $this->load->model('admin_model'); // tambahkan ini
+
         $this->load->helper('url');
     }
 
@@ -40,4 +42,16 @@ class Peta_desa extends CI_Controller {
         $this->load->view('peta_desa/peta', $data);
         // $this->load->view('template/footer');
     }
+
+    public function detail($id) {
+        $data['lokasi'] = $this->admin_model->get_lokasi($id);
+        $data['all_desa'] = $this->admin_model->get_all_desa();
+        $data['kategori_options'] = $this->admin_model->get_kategori_options();
+        $data['fotos'] = $this->admin_model->get_foto_by_lokasi($id);
+
+        $this->load->view('template/header', $data);
+        $this->load->view('peta_desa/detail', $data);
+        $this->load->view('template/footer', $data);
+    }
+
 }
