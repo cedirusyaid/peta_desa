@@ -43,7 +43,7 @@
             <div class="alert alert-danger"><?= validation_errors() ?></div>
         <?php endif; ?>
         
-        <form action="<?= isset($lokasi) ? site_url('admin/update/'.$lokasi->lokasi_id) : site_url('lokasi/store') ?>" method="post">
+        <form action="<?= isset($lokasi) ? site_url('admin/update/'.$lokasi->lokasi_id) : site_url('admin/store') ?>" method="post">
             <div class="mb-3">
                 <label for="lokasi_nama" class="form-label">Nama Lokasi</label>
                 <input type="text" class="form-control" id="lokasi_nama" name="lokasi_nama" value="<?= isset($lokasi) ? $lokasi->lokasi_nama : set_value('lokasi_nama') ?>" required>
