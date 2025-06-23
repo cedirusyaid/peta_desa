@@ -1,4 +1,4 @@
-<div class="container">
+<div class="">
     <h2>PETA DESA <?php echo $desa->desa_nama; ?></h2>
     
     <!-- Tab Navigation -->
