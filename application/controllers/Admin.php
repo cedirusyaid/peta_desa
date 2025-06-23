@@ -133,10 +133,10 @@ class Admin extends CI_Controller {
     }
 
     // Delete - Delete location
-    public function delete($id) {
+    public function delete($id, $desa_id) {
         $this->admin_model->delete_lokasi($id);
         $this->session->set_flashdata('message', 'Lokasi berhasil dihapus');
-        redirect('lokasi');
+        redirect('admin/index?desa_id='.$desa_id);
     }
 
     public function foto_upload($lokasi_id) {

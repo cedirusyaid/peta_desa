@@ -129,7 +129,7 @@
                         <?php if(empty($fotos)): ?>
                             <div class="alert alert-info">Belum ada foto untuk lokasi ini.</div>
                         <?php else: ?>
-<div class="row">
+<div class="row d-flex justify-content-center">
     <?php foreach($fotos as $foto): ?>
         <div class="col-md-6">
             <div class="card photo-card">
@@ -137,6 +137,7 @@
                     <a href="<?= base_url('uploads/foto_lokasi/' . $foto->foto_file) ?>" target="_blank" class="photo-link">
                         <img src="<?= base_url('uploads/foto_lokasi/' . $foto->foto_file) ?>" class="card-img-top photo-thumbnail" alt="Foto Lokasi">
                     </a>
+
                     <a href="<?= site_url('admin/foto_delete/' . $foto->foto_lokasi_id . '/' . $lokasi->lokasi_id) ?>" class="btn btn-sm btn-danger delete-btn" onclick="return confirm('Yakin ingin menghapus foto ini?')" title="hapus">
                         <i class="fa fa-trash"></i>
                     </a>

@@ -61,9 +61,11 @@
                                 <a href="<?= base_url('admin/edit/'.$location->lokasi_id) ?>" class="btn btn-sm btn-warning">
                                     <i class="fas fa-edit"></i>
                                 </a>
-                                <button onclick="confirmDelete(<?= $location->lokasi_id ?>)" class="btn btn-sm btn-danger">
+                                <!-- <button onclick="confirmDelete(<?= $location->lokasi_id ?>)" class="btn btn-sm btn-danger">
                                     <i class="fas fa-trash"></i>
-                                </button>
+                                </button> -->
+                                <a href="<?php echo base_url('admin/delete/'.$location->lokasi_id.'/'.$location->desa_id) ?>" class="btn btn-sm btn-danger" onclick="return confirm('Yakinkah?')"><i class="fas fa-trash"></i></a>
+
                                 <a href="<?= base_url('admin/detail/'.$location->lokasi_id) ?>" class="btn btn-sm btn-info">
                                     <i class="fas fa-eye"></i>
                                 </a>
