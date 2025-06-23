@@ -124,8 +124,8 @@
     <script>
         // Variabel global untuk map dan marker
         let map, marker;
-        let defaultLat = <?= isset($lokasi) ? $lokasi->lokasi_lat : '-5.1619' ?>;
-        let defaultLng = <?= isset($lokasi) ? $lokasi->lokasi_long : '119.4387' ?>;
+        let defaultLat = <?= isset($lokasi) ? $lokasi->lokasi_lat : '-5.' ?>;
+        let defaultLng = <?= isset($lokasi) ? $lokasi->lokasi_long : '120.' ?>;
 
         document.addEventListener('DOMContentLoaded', function() {
             // Initialize the map
