@@ -25,7 +25,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 */
 // $config['base_url'] = 'https://dkip.sinjaikab.go.id/lokasi';
 
-$protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?"https://":"http://";
+// $protocol = (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off')?"https://":"http://";
+$protocol = ($_SERVER['HTTP_HOST']=='peta.sinjaikab.go.id')?"https://":"http://";
 
 $config['base_url'] = $protocol.$_SERVER['HTTP_HOST'].'/lokasi/';
 
