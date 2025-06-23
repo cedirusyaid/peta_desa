@@ -58,6 +58,9 @@
 <!-- Tambahkan Select2 untuk dropdown yang lebih baik -->
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
+<!-- Tambahkan Leaflet Fullscreen CSS -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet.fullscreen/Control.FullScreen.css" />
+
 <!-- Tambahkan JS Bootstrap dan dependencies -->
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -66,6 +69,9 @@
 
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
 <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+<!-- Tambahkan Leaflet Fullscreen JS -->
+<script src="https://unpkg.com/leaflet.fullscreen/Control.FullScreen.js"></script>
+
 <script>
     // Fungsi untuk parsing WKT Polygon
     function parseWKTPolygon(wkt) {
@@ -111,6 +117,14 @@
 
     // Inisialisasi peta
     var map = L.map('map').setView([-5.18, 120.1], 13);
+    
+    // Tambahkan kontrol fullscreen
+    map.addControl(new L.Control.FullScreen({
+        position: 'topleft',
+        title: 'Tampilkan layar penuh',
+        titleCancel: 'Keluar dari layar penuh',
+        forceSeparateButton: true
+    }));
     
     // Layer peta dasar
     var osmLayer = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -225,7 +239,7 @@
     
     lokasiLayer.addTo(map);
 
-    // Membuat kontrol custom
+    // Membuat kontrol custom dengan tombol minimize
     var ControlPanel = L.Control.extend({
         options: {
             position: 'topright'
@@ -234,63 +248,108 @@
         onAdd: function(map) {
             var container = L.DomUtil.create('div', 'leaflet-control-transparent');
             
+            // Buat tombol toggle untuk mobile
+            this._toggleButton = L.DomUtil.create('button', 'control-panel-toggle', container);
+            this._toggleButton.innerHTML = '☰ Pengaturan';
+            this._toggleButton.style.cssText = `
+                position: absolute;
+                right: 0;
+                top: 0;
+                z-index: 1000;
+                background: rgba(255, 255, 255, 0.9);
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                padding: 6px 10px;
+                cursor: pointer;
+                font-size: 13px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            `;
+            
             this._panel = L.DomUtil.create('div', 'map-control-panel', container);
             this._panel.innerHTML = `
-                <h4>Pengaturan Peta</h4>
-                
-                <div class="control-group">
-                    <label>Peta Dasar:</label>
-                    <div class="radio-group">
-                        <label>
-                            <input type="radio" name="baseMap" value="osm" checked> OSM
-                        </label>
-                        <label>
-                            <input type="radio" name="baseMap" value="satellite"> Satelit
+                <div class="panel-header">
+                    <h4>Pengaturan Peta</h4>
+                    <button class="close-panel-btn">&times;</button>
+                </div>
+                <div class="panel-content">
+                    <div class="control-group">
+                        <label>Peta Dasar:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="baseMap" value="osm" checked> OSM
+                            </label>
+                            <label>
+                                <input type="radio" name="baseMap" value="satellite"> Satelit
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label>Batas Wilayah:</label>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="boundaryType" value="desa" checked> Desa
+                            </label>
+                            <label>
+                                <input type="radio" name="boundaryType" value="dusun"> Dusun
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showLocations" checked>
+                            <span>Tampilkan Lokasi</span>
                         </label>
                     </div>
-                </div>
-                
-                <div class="control-group">
-                    <label>Batas Wilayah:</label>
-                    <div class="radio-group">
-                        <label>
-                            <input type="radio" name="boundaryType" value="desa" checked> Desa
-                        </label>
-                        <label>
-                            <input type="radio" name="boundaryType" value="dusun"> Dusun
+                    
+                    <div class="control-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="showLabels" checked>
+                            <span>Tampilkan Label Wilayah</span>
                         </label>
                     </div>
-                </div>
-                
-                <div class="control-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="showLocations" checked>
-                        <span>Tampilkan Lokasi</span>
-                    </label>
-                </div>
-                
-                <div class="control-group">
-                    <label class="checkbox-label">
-                        <input type="checkbox" id="showLabels" checked>
-                        <span>Tampilkan Label Wilayah</span>
-                    </label>
-                </div>
-                
-                <div class="control-group">
-                    <label>Filter Kategori:</label>
-                    <select id="categoryFilter" multiple="multiple" style="width: 100%;">
-                        <option value="all" selected>Semua Kategori</option>
-                        <?php foreach ($kategori_list as $kategori): ?>
-                            <option value="<?php echo $kategori->kategori_id; ?>"><?php echo $kategori->kategori_nama; ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-                
-                <div class="control-group" id="dusunLegend" style="display: none;">
-                    <label>Legenda Dusun:</label>
-                    <div id="legendItems" style="max-height: 200px; overflow-y: auto;"></div>
+                    
+                    <div class="control-group">
+                        <label>Filter Kategori:</label>
+                        <select id="categoryFilter" multiple="multiple" style="width: 100%;">
+                            <option value="all" selected>Semua Kategori</option>
+                            <?php foreach ($kategori_list as $kategori): ?>
+                                <option value="<?php echo $kategori->kategori_id; ?>"><?php echo $kategori->kategori_nama; ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    
+                    <div class="control-group" id="dusunLegend" style="display: none;">
+                        <label>Legenda Dusun:</label>
+                        <div id="legendItems" style="max-height: 200px; overflow-y: auto;"></div>
+                    </div>
                 </div>
             `;
+            
+            // Sembunyikan panel secara default di mobile
+            if (window.innerWidth <= 768) {
+                this._panel.style.display = 'none';
+                this._toggleButton.style.display = 'block';
+            } else {
+                this._panel.style.display = 'block';
+                this._toggleButton.style.display = 'none';
+            }
+            
+            // Event untuk tombol toggle
+            L.DomEvent.on(this._toggleButton, 'click', function() {
+                if (this._panel.style.display === 'none') {
+                    this._panel.style.display = 'block';
+                } else {
+                    this._panel.style.display = 'none';
+                }
+            }, this);
+            
+            // Event untuk tombol close
+            var closeBtn = this._panel.querySelector('.close-panel-btn');
+            L.DomEvent.on(closeBtn, 'click', function() {
+                this._panel.style.display = 'none';
+            }, this);
             
             L.DomEvent.disableClickPropagation(this._panel);
             
@@ -455,6 +514,29 @@
     });
     
     map.fitBounds(desaBoundary.getBounds());
+    
+    // Event handler untuk fullscreen
+    map.on('enterFullscreen', function() {
+        console.log('Peta masuk mode fullscreen');
+    });
+    
+    map.on('exitFullscreen', function() {
+        console.log('Peta keluar dari mode fullscreen');
+    });
+    
+    // Responsive design untuk panel kontrol
+    window.addEventListener('resize', function() {
+        var toggleButton = document.querySelector('.control-panel-toggle');
+        var panel = document.querySelector('.map-control-panel');
+        
+        if (window.innerWidth <= 768) {
+            toggleButton.style.display = 'block';
+            panel.style.display = 'none';
+        } else {
+            toggleButton.style.display = 'none';
+            panel.style.display = 'block';
+        }
+    });
 </script>
 
 <style>
@@ -465,22 +547,44 @@
     }
     
     .map-control-panel {
-        background: rgba(255, 255, 255, 0.9);
+        background: rgba(255, 255, 255, 0.95);
         padding: 12px;
         border-radius: 5px;
         box-shadow: 0 0 15px rgba(0,0,0,0.2);
         font-family: Arial, sans-serif;
         min-width: 220px;
         border: 1px solid #ddd;
+        z-index: 1000;
+        position: relative;
     }
     
-    .map-control-panel h4 {
-        margin: 0 0 12px 0;
-        font-size: 15px;
-        color: #333;
-        text-align: center;
+    .panel-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
         border-bottom: 1px solid #eee;
         padding-bottom: 8px;
+    }
+    
+    .panel-header h4 {
+        margin: 0;
+        font-size: 15px;
+        color: #333;
+    }
+    
+    .close-panel-btn {
+        background: none;
+        border: none;
+        font-size: 20px;
+        cursor: pointer;
+        color: #777;
+        padding: 0 5px;
+        line-height: 1;
+    }
+    
+    .close-panel-btn:hover {
+        color: #333;
     }
     
     .control-group {
@@ -591,5 +695,41 @@
     
     .select2-dropdown {
         border: 1px solid #ced4da !important;
+    }
+    
+    /* Style untuk tombol fullscreen */
+    .leaflet-control-fullscreen a {
+        background: #fff;
+        border-radius: 4px;
+        box-shadow: 0 1px 5px rgba(0,0,0,0.4);
+    }
+    
+    .leaflet-control-fullscreen a:hover {
+        background: #f4f4f4;
+    }
+    
+    .leaflet-touch .leaflet-control-fullscreen a {
+        font-size: 22px;
+        line-height: 30px;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 768px) {
+        .map-control-panel {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90%;
+            max-width: 300px;
+            max-height: 80vh;
+            overflow-y: auto;
+            z-index: 1001;
+        }
+        
+        .control-panel-toggle {
+            display: block !important;
+            z-index: 1000;
+        }
     }
 </style>
