@@ -6,7 +6,7 @@
     <div class="card shadow mb-4">
         <div class="card-header py-3 d-sm-flex align-items-center justify-content-between mb-4">
             <h6 class="m-0 font-weight-bold text-primary">Filter Lokasi</h6>
-            <a href="<?php echo base_url('admin/create'); ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <a href="<?php echo base_url('admin/create?desa_id='.$selected_desa); ?>" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
                 <i class="fas fa-plus fa-sm text-white-50"></i> Create Lokasi
             </a>
         </div>        

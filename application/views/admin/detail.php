@@ -29,8 +29,15 @@
 </style>
 
 <div class="container mt-4">
-    <div class="mb-3 row">
-        <h1 class="mb-4 col-md-12 text-center"> <?= $lokasi->lokasi_nama ?></h1>
+    <div class="mb-3 row   ">
+        <div class="col-md-12 d-flex justify-content-between align-items-center">
+        <h1 class="mb-4 "> <?= $lokasi->lokasi_nama ?></h1>
+        <div>
+            <a href="<?= base_url('admin/index?desa_id='.$lokasi->desa_id) ?>" class="btn btn-sm btn-secondary mr-2">
+                <i class="fas fa-arrow-left"></i> Kembali
+            </a>
+        </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-md-6">
@@ -38,12 +45,12 @@
                 <div class="card">
                     <div class="card-header  d-flex justify-content-between align-items-center">
                         <h4>Data Lokasi</h4>
-                        <a href="<?= base_url('admin/edit/'.$lokasi->lokasi_id) ?>" class="btn btn-sm btn-warning">
-                            <i class="fas fa-edit"></i> edit
-                        </a>
-
+                        <div>
+                            <a href="<?= base_url('admin/edit/'.$lokasi->lokasi_id) ?>" class="btn btn-sm btn-warning">
+                                <i class="fas fa-edit"></i> Edit
+                            </a>
+                        </div>
                     </div>
-
                     <div class="card-body">
                 <div class="mb-3 row">
                     <label for="lokasi_nama" class="form-label  col-md-4">Nama Lokasi</label>

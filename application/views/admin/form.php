@@ -72,7 +72,7 @@
                         </option>
                             
                         <?php endif ?>
-                        <option value="<?= $ds->desa_id ?>" <?= (isset($lokasi) && $lokasi->desa_id == $ds->desa_id) ? 'selected' : '' ?>>
+                        <option value="<?= $ds->desa_id ?>" <?= ((isset($lokasi) && $lokasi->desa_id == $ds->desa_id) || (isset($selected_desa) && $selected_desa == $ds->desa_id)) ? 'selected' : '' ?>>
                             <?= $ds->desa_nama ?>
                         </option>
                     <?php  $kecamatan_id_last=$ds->kecamatan_id; endforeach; ?>

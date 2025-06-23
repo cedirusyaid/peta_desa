@@ -37,6 +37,11 @@ class Admin extends CI_Controller {
     public function create() {
         $data['kategori_options'] = $this->admin_model->get_kategori_options();
         $data['all_desa'] = $this->admin_model->get_all_desa();
+
+        $desa_id = $this->input->get('desa_id') ?? ($data['desa_list'][0]->desa_id ?? 0);
+        $data['selected_desa'] = $desa_id;
+
+
         $this->load->view('template/header', $data);
         $this->load->view('admin/form', $data);
         $this->load->view('template/footer', $data);
@@ -53,6 +58,7 @@ class Admin extends CI_Controller {
         $this->form_validation->set_rules('lokasi_nama', 'Nama Lokasi', 'required');
         $this->form_validation->set_rules('lokasi_kategori', 'Kategori', 'required');
         $this->form_validation->set_rules('lokasi_alamat', 'Alamat', 'required');
+        $this->form_validation->set_rules('desa_id', 'Desa', 'required');
         $this->form_validation->set_rules('lokasi_lat', 'Latitude', 'required');
         $this->form_validation->set_rules('lokasi_long', 'Longitude', 'required');
 
@@ -86,7 +92,6 @@ class Admin extends CI_Controller {
         $this->load->view('admin/form', $data);
     }
 
-    // Edit - Show detail
     public function detail($id) {
         $data['lokasi'] = $this->admin_model->get_lokasi($id);
         $data['all_desa'] = $this->admin_model->get_all_desa();
