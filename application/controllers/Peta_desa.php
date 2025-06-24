@@ -29,7 +29,7 @@ class Peta_desa extends CI_Controller {
         if(!$desa) {
             show_404();
         }
-
+        $kategori_id = isset($_GET['kategori_id']) ? $_GET['kategori_id'] : 0;
         // Ambil data untuk peta
         $data = [
             'desa' => $desa,
