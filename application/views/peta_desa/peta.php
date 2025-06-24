@@ -1,5 +1,17 @@
-<div class="">
+<?php
+// Get parameters from URL
+$kategori_id = isset($_GET['kategori_id']) ? $_GET['kategori_id'] : null;
+$notitle = isset($_GET['notitle']) ? $_GET['notitle'] : 0;
+$nomargin = isset($_GET['nomargin']) ? $_GET['nomargin'] : 0;
+
+// Determine container class based on nomargin parameter
+$containerClass = $nomargin == 1 ? 'container-fluid' : '';
+?>
+
+<div class="<?php echo $containerClass; ?>">
+    <?php if ($notitle != 1): ?>
     <h2>PETA DESA <?php echo $desa->desa_nama; ?></h2>
+    <?php endif; ?>
     
     <!-- Tab Navigation -->
     <ul class="nav nav-tabs" id="desaTabs" role="tablist">
@@ -310,6 +322,7 @@
                         </label>
                     </div>
                     
+                    <?php if (!$kategori_id): ?>
                     <div class="control-group">
                         <label>Filter Kategori:</label>
                         <select id="categoryFilter" multiple="multiple" style="width: 100%;">
@@ -319,6 +332,7 @@
                             <?php endforeach; ?>
                         </select>
                     </div>
+                    <?php endif; ?>
                     
                     <div class="control-group" id="dusunLegend" style="display: none;">
                         <label>Legenda Dusun:</label>
@@ -404,6 +418,16 @@
     
     // Fungsi untuk filter marker berdasarkan kategori
     function filterMarkersByCategory() {
+        <?php if ($kategori_id): ?>
+        // Jika kategori_id ada di URL, filter berdasarkan kategori tersebut
+        lokasiLayer.clearLayers();
+        allMarkers.forEach(function(marker) {
+            if (marker.options.categoryId == <?php echo $kategori_id; ?>) {
+                lokasiLayer.addLayer(marker);
+            }
+        });
+        <?php else: ?>
+        // Jika tidak ada kategori_id, gunakan filter dari select box
         var selectedCategories = $('#categoryFilter').val();
         lokasiLayer.clearLayers();
         
@@ -421,6 +445,7 @@
                 lokasiLayer.addLayer(marker);
             }
         });
+        <?php endif; ?>
     }
     
     // Fungsi untuk memperbarui peta berdasarkan pengaturan
@@ -478,7 +503,8 @@
     }
     
     $(document).ready(function() {
-        // Inisialisasi Select2
+        <?php if (!$kategori_id): ?>
+        // Inisialisasi Select2 hanya jika tidak ada kategori_id di URL
         $('#categoryFilter').select2({
             placeholder: "Pilih kategori",
             allowClear: true,
@@ -493,6 +519,7 @@
             }
             updateMap();
         });
+        <?php endif; ?>
         
         var baseMapRadios = document.querySelectorAll('input[name="baseMap"]');
         var boundaryRadios = document.querySelectorAll('input[name="boundaryType"]');
@@ -510,7 +537,10 @@
         showLocations.addEventListener('change', updateMap);
         showLabels.addEventListener('change', updateMap);
         
+        // Jika ada kategori_id di URL, langsung filter marker
+        <?php if ($kategori_id): ?>
         updateMap();
+        <?php endif; ?>
     });
     
     map.fitBounds(desaBoundary.getBounds());
