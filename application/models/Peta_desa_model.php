@@ -38,7 +38,7 @@ class Peta_desa_model extends CI_Model {
         $this->db->from('gis_lokasi l');
         $this->db->join('gis_kategori k', 'l.lokasi_kategori = k.kategori_id', 'left');
         $this->db->where('l.desa_id', $desa_id);
-        if ($kategori_id>0) {
+        if ($kategori_id==0) {
         $this->db->where('k.kategori_aktif', 1);
         }     
         
@@ -60,9 +60,9 @@ public function get_all_kategori_at_desa($desa_id, $kategori_id=0) {
     $this->db->from('gis_kategori k');
     $this->db->join('gis_lokasi l', 'k.kategori_id = l.lokasi_kategori AND l.desa_id = '.$desa_id, 'left');
     
-    if ($kategori_id>0) {
+    // if ($kategori_id == 0) {
     $this->db->where('k.kategori_aktif', 1);
-    }     
+    // }     
     $this->db->group_by('k.kategori_id');
     $this->db->having('jml >', 0);  // Add this line to filter for count > 0
     $this->db->order_by('k.kategori_nama', 'ASC');

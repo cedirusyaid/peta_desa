@@ -34,7 +34,7 @@ class Peta_desa extends CI_Controller {
         $data = [
             'desa' => $desa,
             'dusun_list' => $this->Peta_desa_model->get_dusun_by_desa($desa_id),
-            'lokasi_list' => $this->Peta_desa_model->get_lokasi_by_desa($desa_id),
+            'lokasi_list' => $this->Peta_desa_model->get_lokasi_by_desa($desa_id, $kategori_id),
             'kategori_list' => $this->Peta_desa_model->get_all_kategori_at_desa($desa_id)
         ];
 // print_r($data['kategori_list']); die();
