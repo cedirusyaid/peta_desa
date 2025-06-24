@@ -47,6 +47,7 @@ $containerClass = $nomargin == 1 ? 'container-fluid' : '';
                         </thead>
                         <tbody>
                             <?php foreach ($lokasi_list as $index => $lokasi): ?>
+                            <?php if ($kategori_id==null or $kategori_id==$lokasi->kategori_id): ?>
                             <tr>
                                 <td><?php echo $index + 1; ?></td>
                                 <td><a href="<?php echo base_url('/peta_desa/detail/').$lokasi->lokasi_id; ?>"> <?php echo $lokasi->lokasi_nama; ?></a></td>
@@ -55,6 +56,7 @@ $containerClass = $nomargin == 1 ? 'container-fluid' : '';
                                 <td><?php echo $lokasi->lokasi_lat . ', ' . $lokasi->lokasi_long; ?></td>
                                 <td><?php echo $lokasi->lokasi_keterangan ?? '-'; ?></td>
                             </tr>
+                            <?php endif; ?>
                             <?php endforeach; ?>
                         </tbody>
                     </table>
