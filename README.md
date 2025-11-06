@@ -1,57 +1,67 @@
-# Peta Desa
+# Peta Desa Digital
 
-Aplikasi web pemetaan digital untuk desa berbasis CodeIgniter 3 dan LeafletJS.
+![PHP](https://img.shields.io/badge/PHP-7.4%2B-blue)
+![CodeIgniter](https://img.shields.io/badge/CodeIgniter-3-orange)
+![LeafletJS](https://img.shields.io/badge/LeafletJS-1.9.4-green)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-4-purple)
 
-Aplikasi ini memungkinkan pengguna untuk melihat peta desa, lengkap dengan lokasi-lokasi penting seperti kantor desa, sekolah, tempat ibadah, dan fasilitas umum lainnya. Pengguna dapat memfilter lokasi berdasarkan kategori dan melihat detail setiap lokasi, termasuk foto.
+Aplikasi web pemetaan digital untuk desa berbasis **CodeIgniter 3** dan **LeafletJS**. Aplikasi ini dirancang untuk memudahkan visualisasi data geografis desa dan menyediakan platform untuk mengelola informasi lokasi penting.
 
-## Fitur
+## Pratinjau
 
-*   **Peta Interaktif**: Menampilkan peta desa menggunakan LeafletJS dengan OpenStreetMap sebagai basemap.
-*   **Manajemen Lokasi**: Administrator dapat dengan mudah menambah, mengubah, dan menghapus data lokasi melalui antarmuka admin.
-*   **Kategori Lokasi**: Lokasi dikelompokkan berdasarkan kategori untuk memudahkan pemfilteran dan pencarian.
-*   **Detail Lokasi**: Setiap lokasi dapat memiliki halaman detail dengan informasi lebih lanjut dan galeri foto.
-*   **Manajemen Pengguna**: Sistem otentikasi dan manajemen pengguna untuk administrator dan pengguna terdaftar.
-*   **Dukungan Multi-Desa**: Aplikasi ini dapat digunakan untuk mengelola peta beberapa desa.
-*   **Deployment Mudah**: Termasuk skrip untuk melakukan `git pull` untuk pembaruan yang mudah.
+![Pratinjau Peta Desa](https://via.placeholder.com/800x400.png?text=Pratinjau+Aplikasi+Peta+Desa)
+*Gambar: Tampilan utama aplikasi peta desa.*
 
-## Teknologi yang Digunakan
+## Fitur Utama
 
-*   **Back-end**: PHP, CodeIgniter 3
-*   **Front-end**: JavaScript, jQuery, Bootstrap, LeafletJS
-*   **Database**: MySQL/MariaDB
+-   🗺️ **Peta Interaktif**: Peta dinamis dengan LeafletJS dan OpenStreetMap.
+-   📍 **Manajemen Lokasi (CRUD)**: Kelola data lokasi dengan mudah melalui panel admin.
+-   🗂️ **Kategori & Filter**: Kelompokkan lokasi berdasarkan kategori dan filter untuk pencarian cepat.
+-   📸 **Galeri Foto**: Unggah dan tampilkan foto untuk setiap lokasi.
+-   👤 **Manajemen Pengguna**: Sistem otentikasi untuk admin dan pengguna.
+-   🏘️ **Dukungan Multi-Desa**: Dapat dikonfigurasi untuk menampilkan data dari beberapa desa.
+-   🚀 **Deployment Mudah**: Dilengkapi dengan skrip untuk pembaruan via `git pull`.
+
+## Teknologi
+
+-   **Framework**: CodeIgniter 3
+-   **Pustaka Peta**: LeafletJS
+-   **Antarmuka**: Bootstrap 4, jQuery
+-   **Bahasa**: PHP, JavaScript
+-   **Database**: MySQL/MariaDB
 
 ## Instalasi
 
-1.  **Clone repository:**
+1.  **Clone Repository**
     ```bash
-    git clone https://github.com/nama_pengguna/nama_repo.git
+    git clone https://github.com/cedirusyaid/peta_desa.git
+    cd peta_desa
     ```
-2.  **Impor database:**
-    *   Buat database baru di MySQL/MariaDB Anda.
-    *   Impor file `peta_desa_db.zip` (atau file SQL yang diekstrak) ke dalam database yang baru Anda buat.
-3.  **Konfigurasi database:**
-    *   Buka file `application/config/database.php`.
-    *   Sesuaikan pengaturan `hostname`, `username`, `password`, dan `database` dengan konfigurasi server database Anda.
-4.  **Konfigurasi base URL:**
-    *   Buka file `application/config/config.php`.
-    *   Sesuaikan `base_url` dengan URL proyek Anda.
-5.  **Jalankan aplikasi:**
-    *   Arahkan browser Anda ke `base_url` yang telah Anda konfigurasikan.
+
+2.  **Database**
+    -   Buat database baru di MySQL/MariaDB.
+    -   Impor file `peta_desa_db.zip` (atau file SQL yang telah diekstrak) ke database Anda.
+
+3.  **Konfigurasi**
+    -   Salin `application/config/config.example.php` menjadi `application/config/config.php`.
+    -   Salin `application/config/database.example.php` menjadi `application/config/database.php`.
+    -   Sesuaikan **base URL** di `application/config/config.php`.
+    -   Sesuaikan **kredensial database** di `application/config/database.php`.
+
+4.  **Jalankan Aplikasi**
+    -   Arahkan browser Anda ke base URL yang telah dikonfigurasi.
 
 ## Struktur Proyek
 
 ```
-peta_desa/
-├── application/
-│   ├── controllers/  # Logika bisnis aplikasi
-│   ├── models/       # Interaksi database
-│   ├── views/        # Tampilan antarmuka pengguna
-│   └── config/       # File konfigurasi
-├── assets/           # File CSS, JavaScript, dan gambar
-├── system/           # File inti CodeIgniter
-└── uploads/          # Direktori untuk unggahan file (misalnya, foto lokasi)
+.
+├── 📂 application/    # Inti aplikasi (MVC)
+├── 📂 assets/         # Aset frontend (CSS, JS, gambar)
+├── 📂 system/         # File inti CodeIgniter
+├── 📂 uploads/        # Direktori unggahan
+└── 📜 README.md
 ```
 
 ## Kontribusi
 
-Kontribusi dalam bentuk apa pun sangat kami harapkan. Silakan buat *pull request* atau buka *issue* jika Anda menemukan masalah atau memiliki saran.
+Kami sangat terbuka untuk kontribusi! Jika Anda ingin membantu, silakan fork repositori ini dan buat pull request. Untuk bug atau saran fitur, silakan buka issue baru.
